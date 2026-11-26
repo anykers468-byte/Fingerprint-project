@@ -1,0 +1,354 @@
+<div id="capacitor-demo">
+  <style>
+    #capacitor-demo {
+      font-family: Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      width: 100%;
+      padding: 12px;
+      box-sizing: border-box;
+    }
+
+    #capacitor-demo * {
+      box-sizing: border-box;
+    }
+
+    #capacitor-demo h2 {
+      font-family: "Times New Roman", serif;
+      color: #073763;
+      font-size: 25px;
+      margin: 0 0 7px;
+    }
+
+    #capacitor-demo p {
+      font-size: 14px;
+      line-height: 1.45;
+      margin: 6px 0;
+    }
+
+    #capacitor-demo .intro {
+      margin-bottom: 13px;
+    }
+
+    #capacitor-demo .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    #capacitor-demo .diagram {
+      background: #f5f8fb;
+      border-radius: 10px;
+      padding: 12px 8px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 265px;
+    }
+
+    #capacitor-demo .plate-label {
+      font-size: 12px;
+      color: #073763;
+      font-weight: bold;
+      margin: 3px 0;
+    }
+
+    #capacitor-demo .charge {
+      color: #d17a00;
+      font-size: 15px;
+      letter-spacing: 7px;
+      font-weight: bold;
+    }
+
+    #capacitor-demo .plate {
+      width: 160px;
+      max-width: 80%;
+      height: 11px;
+      background: #073763;
+      border-radius: 3px;
+      margin: 0 auto;
+    }
+
+    #capacitor-demo .gap {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: height 0.15s ease;
+    }
+
+    #capacitor-demo .gap svg {
+      width: 200px;
+      max-width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #capacitor-demo .field-line {
+      stroke: #d17a00;
+      stroke-width: 1.7;
+      fill: none;
+      stroke-dasharray: 4 3;
+    }
+
+    #capacitor-demo .field-arrow {
+      fill: #d17a00;
+    }
+
+    #capacitor-demo .field-label {
+      font-size: 11px;
+      color: #9b5b00;
+      margin: 4px 0 7px;
+    }
+
+    #capacitor-demo .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #capacitor-demo .formula {
+      text-align: center;
+      font-size: 18px;
+      color: #073763;
+      font-family: "Times New Roman", serif;
+      padding: 8px;
+      background: #f5f8fb;
+      border-radius: 8px;
+    }
+
+    #capacitor-demo .controls {
+      border: 1px solid #d8e0e8;
+      border-radius: 9px;
+      padding: 12px;
+    }
+
+    #capacitor-demo .control-heading {
+      color: #073763;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    #capacitor-demo input[type="range"] {
+      width: 100%;
+      accent-color: #073763;
+      cursor: pointer;
+      margin: 7px 0;
+    }
+
+    #capacitor-demo .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #666;
+    }
+
+    #capacitor-demo .distance {
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    #capacitor-demo .result {
+      background: #edf4fa;
+      border-radius: 9px;
+      padding: 11px;
+      text-align: center;
+    }
+
+    #capacitor-demo .result-label {
+      font-size: 12px;
+      color: #444;
+    }
+
+    #capacitor-demo .result-value {
+      font-family: "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: bold;
+      color: #073763;
+      margin: 3px 0;
+    }
+
+    #capacitor-demo .explanation {
+      border-left: 3px solid #073763;
+      padding: 7px 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      background: #fafbfd;
+    }
+
+    #capacitor-demo .bottom-note {
+      font-size: 12px;
+      color: #444;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 600px) {
+      #capacitor-demo .layout {
+        grid-template-columns: 1fr;
+      }
+
+      #capacitor-demo .diagram {
+        min-height: 230px;
+      }
+
+      #capacitor-demo .right {
+        gap: 9px;
+      }
+    }
+  </style>
+
+  <h2>How Does a Capacitor Work?</h2>
+
+  <p class="intro">
+    A capacitor stores electrical energy using two conductive
+    plates separated by an insulating material. Opposite
+    electrical charges build up on the two plates.
+  </p>
+
+  <div class="layout">
+    <div class="diagram">
+      <div class="plate-label">Positive plate</div>
+      <div class="charge">+ + + + +</div>
+      <div class="plate"></div>
+
+      <div class="gap" id="gap-visual">
+        <svg viewBox="0 0 220 100" preserveAspectRatio="none">
+          <defs>
+            <marker id="field-arrowhead" markerWidth="5"
+              markerHeight="5" refX="4" refY="2.5"
+              orient="auto">
+              <path d="M0 0 L5 2.5 L0 5 Z"
+                class="field-arrow"/>
+            </marker>
+          </defs>
+
+          <g id="field-lines">
+            <line class="field-line" x1="30" y1="5"
+              x2="30" y2="95" marker-end="url(#field-arrowhead)"/>
+            <line class="field-line" x1="70" y1="5"
+              x2="70" y2="95" marker-end="url(#field-arrowhead)"/>
+            <line class="field-line" x1="110" y1="5"
+              x2="110" y2="95" marker-end="url(#field-arrowhead)"/>
+            <line class="field-line" x1="150" y1="5"
+              x2="150" y2="95" marker-end="url(#field-arrowhead)"/>
+            <line class="field-line" x1="190" y1="5"
+              x2="190" y2="95" marker-end="url(#field-arrowhead)"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="field-label">Electric field</div>
+
+      <div class="plate"></div>
+      <div class="charge">− − − − −</div>
+      <div class="plate-label">Negative plate</div>
+    </div>
+
+    <div class="right">
+      <div class="formula">C = ε₀ εᵣ A / d</div>
+
+      <div class="controls">
+        <div class="control-heading">
+          Change the distance between the plates
+        </div>
+
+        <input
+          type="range"
+          id="plate-distance"
+          min="0.2"
+          max="2"
+          step="0.1"
+          value="1"
+        >
+
+        <div class="range-labels">
+          <span>Closer</span>
+          <span>Farther apart</span>
+        </div>
+
+        <div class="distance">
+          Distance: <strong><span id="distance-value">1.0</span> mm</strong>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="result-label">Calculated capacitance</div>
+        <div class="result-value">
+          <span id="capacitance-value">2.21</span> pF
+        </div>
+        <div class="result-label">Picofarads</div>
+      </div>
+
+      <div class="explanation" id="capacitor-explanation">
+        Bringing the plates closer together increases capacitance.
+        Increasing their separation decreases it.
+      </div>
+    </div>
+  </div>
+
+  <p class="bottom-note">
+    The insulating material prevents direct charge flow between
+    the plates. The electric field exists in the space between them.
+  </p>
+
+  <script>
+    (function () {
+      const root = document.getElementById("capacitor-demo");
+
+      const slider = root.querySelector("#plate-distance");
+      const distanceValue = root.querySelector("#distance-value");
+      const capacitanceValue = root.querySelector("#capacitance-value");
+      const explanation = root.querySelector("#capacitor-explanation");
+      const gapVisual = root.querySelector("#gap-visual");
+
+      const epsilon0 = 8.854e-12;
+      const relativePermittivity = 2.5;
+      const plateArea = 0.0001;
+
+      function updateCapacitance() {
+        const distanceMM = Number(slider.value);
+        const distanceM = distanceMM / 1000;
+
+        const capacitance =
+          (epsilon0 * relativePermittivity * plateArea) /
+          distanceM;
+
+        const capacitancePF = capacitance * 1e12;
+
+        distanceValue.textContent = distanceMM.toFixed(1);
+        capacitanceValue.textContent = capacitancePF.toFixed(2);
+
+        gapVisual.style.height =
+          (25 + distanceMM * 25) + "px";
+
+        if (distanceMM < 0.7) {
+          explanation.textContent =
+            "The plates are close together, producing higher capacitance. Smaller separation increases capacitance.";
+        } else if (distanceMM > 1.4) {
+          explanation.textContent =
+            "The plates are farther apart, producing lower capacitance. Greater separation decreases capacitance.";
+        } else {
+          explanation.textContent =
+            "As the distance between the plates increases, capacitance decreases. Bringing them closer increases it.";
+        }
+      }
+
+      slider.addEventListener("input", updateCapacitance);
+      updateCapacitance();
+    })();
+  </script>
+</div><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+</head>
+<body>
+    
+</body>
+</html>

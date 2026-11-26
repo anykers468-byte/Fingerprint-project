@@ -1,0 +1,302 @@
+<div id="fingerprint-demo">
+  <style>
+    #fingerprint-demo {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(14px, 3vw, 32px);
+      background: #FFFFFF;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    #fingerprint-demo * {
+      box-sizing: border-box;
+    }
+
+    #fingerprint-demo h2 {
+      font-family: "Times New Roman", Times, serif;
+      font-size: clamp(25px, 3vw, 34px);
+      font-weight: bold;
+      color: #073763;
+      margin: 0 0 12px;
+    }
+
+    #fingerprint-demo p {
+      font-size: 15px;
+      line-height: 1.6;
+      font-weight: normal;
+      color: #000000;
+      margin: 0 0 24px;
+    }
+
+    #fingerprint-demo svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      touch-action: manipulation;
+      overflow: visible;
+    }
+
+    #fingerprint-demo .ridge {
+      fill: #249bd4;
+      stroke: #249bd4;
+      stroke-width: 2;
+      cursor: pointer;
+      transition:
+        fill 0.45s ease,
+        stroke 0.45s ease;
+    }
+
+    #fingerprint-demo .ridge.is-active {
+      fill: #073763;
+      stroke: #073763;
+    }
+
+    #fingerprint-demo .valley {
+      fill: #d9e8f1;
+      stroke: #d9e8f1;
+      stroke-width: 2;
+      cursor: pointer;
+      transition:
+        fill 0.45s ease,
+        stroke 0.45s ease;
+    }
+
+    #fingerprint-demo .valley.is-active {
+      fill: #f0a52b;
+      stroke: #f0a52b;
+    }
+
+    #fingerprint-demo .ridge:focus-visible,
+    #fingerprint-demo .valley:focus-visible {
+      outline: none;
+      stroke: #f0a52b;
+      stroke-width: 5;
+    }
+
+    #fingerprint-demo .definition {
+      background: #FFFFFF;
+      border: 1px solid #e1e5e9;
+      border-radius: 12px;
+      padding: clamp(15px, 2vw, 22px);
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: #000000;
+      font-weight: normal;
+      min-height: 88px;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    #fingerprint-demo .definition.fading {
+      opacity: 0;
+    }
+
+    #fingerprint-demo .definition strong {
+      font-weight: bold;
+      color: #000000;
+    }
+
+    #fingerprint-demo .legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 18px;
+      font-size: 14px;
+      color: #000000;
+    }
+
+    #fingerprint-demo .legend span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #fingerprint-demo .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    @media (max-width: 500px) {
+      #fingerprint-demo {
+        padding: 14px 8px;
+      }
+
+      #fingerprint-demo p {
+        font-size: 14px;
+      }
+
+      #fingerprint-demo .definition {
+        font-size: 15px;
+      }
+
+      #fingerprint-demo .legend {
+        gap: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #fingerprint-demo .ridge,
+      #fingerprint-demo .valley,
+      #fingerprint-demo .definition {
+        transition: none;
+      }
+    }
+  </style>
+
+  <h2>Fingerprint Ridges and Valleys</h2>
+
+  <p>
+    A fingerprint is made up of raised and lower areas.
+    Tap either part of the diagram to learn about it.
+  </p>
+
+  <svg viewBox="0 0 900 180"
+       role="group"
+       aria-label="Interactive fingerprint cross-section">
+
+    <rect x="5" y="130" width="890" height="25"
+          rx="4" fill="#cbd0d8"/>
+
+    <!-- Ridges -->
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M10 130 C14 85 35 35 65 35
+         C95 35 116 85 120 130 Z"/>
+
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M160 130 C164 85 185 35 215 35
+         C245 35 266 85 270 130 Z"/>
+
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M310 130 C314 85 335 35 365 35
+         C395 35 416 85 420 130 Z"/>
+
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M460 130 C464 85 485 35 515 35
+         C545 35 566 85 570 130 Z"/>
+
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M610 130 C614 85 635 35 665 35
+         C695 35 716 85 720 130 Z"/>
+
+    <path class="ridge is-active"
+      data-part="ridge" tabindex="0" role="button"
+      aria-label="Ridge"
+      d="M760 130 C764 85 785 35 815 35
+         C845 35 866 85 870 130 Z"/>
+
+    <!-- Valleys -->
+    <path class="valley"
+      data-part="valley" tabindex="0" role="button"
+      aria-label="Valley"
+      d="M120 130 L160 130 L160 155 L120 155 Z"/>
+
+    <path class="valley"
+      data-part="valley" tabindex="0" role="button"
+      aria-label="Valley"
+      d="M270 130 L310 130 L310 155 L270 155 Z"/>
+
+    <path class="valley"
+      data-part="valley" tabindex="0" role="button"
+      aria-label="Valley"
+      d="M420 130 L460 130 L460 155 L420 155 Z"/>
+
+    <path class="valley"
+      data-part="valley" tabindex="0" role="button"
+      aria-label="Valley"
+      d="M570 130 L610 130 L610 155 L570 155 Z"/>
+
+    <path class="valley"
+      data-part="valley" tabindex="0" role="button"
+      aria-label="Valley"
+      d="M720 130 L760 130 L760 155 L720 155 Z"/>
+  </svg>
+
+  <div class="legend">
+    <span>
+      <i class="dot" style="background:#073763"></i>
+      Ridges
+    </span>
+    <span>
+      <i class="dot" style="background:#f0a52b"></i>
+      Valleys
+    </span>
+  </div>
+
+  <div class="definition" aria-live="polite">
+    <strong>Ridges:</strong> The raised parts of your fingerprint are called ridges.
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById("fingerprint-demo");
+      if (!root || root.dataset.ready) return;
+      root.dataset.ready = "true";
+
+      const definition = root.querySelector(".definition");
+      const parts = root.querySelectorAll("[data-part]");
+
+      let currentPart = "ridge";
+      let changeNumber = 0;
+
+      function selectPart(part) {
+        if (part === currentPart) return;
+        currentPart = part;
+
+        const thisChange = ++changeNumber;
+
+        parts.forEach(element => {
+          element.classList.toggle(
+            "is-active",
+            element.dataset.part === part
+          );
+        });
+
+        definition.classList.add("fading");
+
+        setTimeout(() => {
+          if (thisChange !== changeNumber) return;
+
+          if (part === "ridge") {
+            definition.innerHTML =
+              "<strong>Ridges:</strong> The raised parts of your fingerprint are called ridges.";
+          } else {
+            definition.innerHTML =
+              "<strong>Valleys:</strong> The lower areas between the raised ridges are called valleys.";
+          }
+
+          definition.classList.remove("fading");
+        }, 250);
+      }
+
+      parts.forEach(element => {
+        element.addEventListener("click", () => {
+          selectPart(element.dataset.part);
+        });
+
+        element.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectPart(element.dataset.part);
+          }
+        });
+      });
+    })();
+  </script>
+</div>

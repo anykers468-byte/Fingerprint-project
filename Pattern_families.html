@@ -1,0 +1,423 @@
+<div id="fingerprint-patterns">
+
+  <h2>Three pattern families</h2>
+
+  <div class="pattern-layout">
+
+    <div class="pattern-menu" role="group" aria-label="Choose a fingerprint pattern">
+      <button class="pattern-button active" data-pattern="loop" aria-pressed="true">Loop</button>
+      <button class="pattern-button" data-pattern="whorl" aria-pressed="false">Whorl</button>
+      <button class="pattern-button" data-pattern="arch" aria-pressed="false">Arch</button>
+    </div>
+
+    <div class="pattern-content">
+
+      <div class="fingerprint-image" id="fingerprint-image">
+        <svg viewBox="0 0 220 220" role="img" aria-label="Loop fingerprint pattern"></svg>
+      </div>
+
+      <div class="pattern-description" aria-live="polite">
+        <div class="percentage" id="pattern-percentage">≈ 60–65%</div>
+        <div class="percentage-caption">of people (approx.)</div>
+        <p id="pattern-definition">
+          Ridges enter from one side, curve around, and exit the same side.
+          A typical loop has one delta.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="pattern-note">
+    These percentages are approximate educational estimates.
+    Actual frequencies can vary between populations.
+  </p>
+
+</div>
+
+<style>
+#fingerprint-patterns {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+  box-sizing: border-box;
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Arial, sans-serif;
+}
+
+#fingerprint-patterns * {
+  box-sizing: border-box;
+}
+
+#fingerprint-patterns h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 30px;
+}
+
+#fingerprint-patterns .pattern-layout {
+  display: grid;
+  grid-template-columns: minmax(110px, 190px) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 55px);
+  align-items: center;
+  width: 100%;
+}
+
+#fingerprint-patterns .pattern-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#fingerprint-patterns .pattern-button {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 18px;
+  border: 1px solid #e1e5e9;
+  border-radius: 9px;
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+#fingerprint-patterns .pattern-button:hover {
+  border-color: #073763;
+}
+
+#fingerprint-patterns .pattern-button.active {
+  background: #073763;
+  border-color: #073763;
+  color: #FFFFFF;
+}
+
+#fingerprint-patterns .pattern-button:focus-visible {
+  outline: 3px solid #f0a52b;
+  outline-offset: 3px;
+}
+
+#fingerprint-patterns .pattern-content {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.85fr) minmax(0, 1.4fr);
+  gap: clamp(22px, 4vw, 65px);
+  align-items: center;
+  min-width: 0;
+  padding: clamp(12px, 2vw, 24px);
+}
+
+#fingerprint-patterns .fingerprint-image {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+#fingerprint-patterns .fingerprint-image svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  transform: scaleX(0.78);
+  transform-origin: center;
+}
+#fingerprint-patterns .ridge {
+  fill: none;
+  stroke: #111111;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-ridge 0.65s ease forwards;
+}
+
+@keyframes draw-ridge {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#fingerprint-patterns .pattern-description {
+  min-width: 0;
+  transition: opacity 0.25s ease;
+}
+
+#fingerprint-patterns .pattern-description.fading {
+  opacity: 0;
+}
+
+#fingerprint-patterns .percentage {
+  color: #249bd4;
+  font-size: clamp(30px, 4vw, 43px);
+  font-weight: bold;
+  line-height: 1.15;
+}
+
+#fingerprint-patterns .percentage-caption {
+  color: #000000;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+#fingerprint-patterns .pattern-description p {
+  color: #000000;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.7;
+  margin: 18px 0 0;
+}
+
+#fingerprint-patterns .pattern-note {
+  color: #000000;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 28px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #e1e5e9;
+}
+
+/* Smaller screens */
+@media (max-width: 700px) {
+  #fingerprint-patterns {
+    padding: 22px 14px;
+  }
+
+  #fingerprint-patterns .pattern-layout {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  #fingerprint-patterns .pattern-menu {
+    gap: 9px;
+  }
+
+  #fingerprint-patterns .pattern-button {
+    min-height: 46px;
+    padding: 10px 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  #fingerprint-patterns .pattern-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 4px;
+  }
+
+  #fingerprint-patterns .fingerprint-image {
+    max-width: 190px;
+  }
+
+  #fingerprint-patterns .pattern-description {
+    text-align: center;
+  }
+
+  #fingerprint-patterns .pattern-description p {
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  #fingerprint-patterns .percentage {
+    font-size: 29px;
+  }
+
+  #fingerprint-patterns .percentage-caption {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  #fingerprint-patterns .pattern-layout {
+    grid-template-columns: 68px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  #fingerprint-patterns .pattern-button {
+    font-size: 12px;
+    padding: 8px 4px;
+  }
+
+  #fingerprint-patterns .fingerprint-image {
+    max-width: 155px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #fingerprint-patterns .ridge {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  #fingerprint-patterns * {
+    transition: none !important;
+  }
+}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById("fingerprint-patterns");
+
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "true";
+
+  const buttons = root.querySelectorAll(".pattern-button");
+  const image = root.querySelector("#fingerprint-image");
+  const description = root.querySelector(".pattern-description");
+  const percentage = root.querySelector("#pattern-percentage");
+  const definition = root.querySelector("#pattern-definition");
+
+  const NS = "http://www.w3.org/2000/svg";
+
+  const patterns = {
+    loop: {
+      percentage: "≈ 60–65%",
+      definition:
+        "Ridges enter from one side, curve around, and exit the same side. A typical loop has one delta.",
+      label: "Loop fingerprint pattern",
+      paths: (() => {
+        const result = [];
+
+        for (let i = 0; i < 11; i++) {
+          const left = 48 + i * 4.1;
+          const right = 172 - i * 4.1;
+          const top = 28 + i * 5.2;
+          const bottom = 187 - i * 1.3;
+
+          result.push(
+            `M ${left} ${bottom}
+             C ${left - 9} ${top + 55},
+               ${left + 10} ${top},
+               110 ${top}
+             C ${right - 10} ${top},
+               ${right + 9} ${top + 55},
+               ${right} ${bottom}`
+          );
+        }
+
+        return result;
+      })()
+    },
+
+    whorl: {
+      percentage: "≈ 30–35%",
+      definition:
+        "Ridges form circular or spiral patterns around a central area. A typical whorl has two deltas.",
+      label: "Whorl fingerprint pattern",
+      paths: (() => {
+        const result = [];
+
+        for (let i = 0; i < 11; i++) {
+          const rx = 83 - i * 5.2;
+          const ry = 83 - i * 5.2;
+
+          result.push(
+            `M 110 ${110 - ry}
+             A ${rx} ${ry} 0 1 1 109.9 ${110 - ry}`
+          );
+        }
+
+        result.push(
+          "M 110 110 C 142 82 151 128 119 142 C 89 155 72 119 91 92 C 107 70 139 83 145 107"
+        );
+
+        return result;
+      })()
+    },
+
+    arch: {
+      percentage: "≈ 5%",
+      definition:
+        "Ridges enter from one side, rise in the middle, and flow out on the opposite side. An arch has no delta.",
+      label: "Arch fingerprint pattern",
+      paths: (() => {
+        const result = [];
+
+        for (let i = 0; i < 11; i++) {
+          const y = 75 + i * 7;
+          const rise = 43 - i * 1.5;
+
+          result.push(
+            `M 27 ${y + 35}
+             C 56 ${y + 20},
+               75 ${y - rise},
+               110 ${y - rise}
+             C 145 ${y - rise},
+               164 ${y + 20},
+               193 ${y + 35}`
+          );
+        }
+
+        return result;
+      })()
+    }
+  };
+
+  function drawPattern(name) {
+    const pattern = patterns[name];
+
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 220 220");
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", pattern.label);
+
+    pattern.paths.forEach((pathData, index) => {
+      const path = document.createElementNS(NS, "path");
+
+      path.setAttribute("d", pathData);
+      path.setAttribute("class", "ridge");
+      path.style.animationDelay = `${index * 0.075}s`;
+
+      svg.appendChild(path);
+    });
+
+    image.replaceChildren(svg);
+  }
+
+  let currentPattern = "loop";
+  let changeNumber = 0;
+
+  drawPattern("loop");
+
+  function selectPattern(name) {
+    if (!patterns[name] || name === currentPattern) return;
+
+    currentPattern = name;
+    const thisChange = ++changeNumber;
+
+    buttons.forEach(button => {
+      const selected = button.dataset.pattern === name;
+
+      button.classList.toggle("active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+
+    description.classList.add("fading");
+
+    window.setTimeout(() => {
+      if (thisChange !== changeNumber) return;
+
+      const selected = patterns[name];
+
+      percentage.textContent = selected.percentage;
+      definition.textContent = selected.definition;
+
+      drawPattern(name);
+
+      description.classList.remove("fading");
+    }, 250);
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      selectPattern(button.dataset.pattern);
+    });
+  });
+})();
+</script>
+```

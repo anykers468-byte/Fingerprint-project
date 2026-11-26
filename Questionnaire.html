@@ -1,0 +1,986 @@
+<div id="fingerprint-quiz">
+
+  <h2>Test Your Knowledge</h2>
+
+  <p class="quiz-intro">
+    You have learned how fingerprints are formed, how sensors detect them
+    and how fingerprint recognition works. Let's see what you remember!
+  </p>
+
+  <div class="quiz-card">
+
+    <!-- Progress -->
+    <div class="quiz-progress-top">
+      <span id="quiz-progress-text">Question 1 of 5</span>
+      <span id="quiz-score-preview">Score: 0</span>
+    </div>
+
+    <div
+      class="quiz-progress-track"
+      role="progressbar"
+      aria-label="Quiz progress"
+      aria-valuemin="0"
+      aria-valuemax="5"
+      aria-valuenow="0"
+      id="quiz-progress-bar">
+
+      <div id="quiz-progress-fill"></div>
+
+    </div>
+
+
+    <!-- Question -->
+    <div id="quiz-question-area">
+
+      <h3 id="quiz-question">
+        What are the raised parts of a fingerprint called?
+      </h3>
+
+      <p class="quiz-instruction">
+        Select one answer.
+      </p>
+
+      <div id="quiz-options"></div>
+
+      <button
+        type="button"
+        id="quiz-check"
+        class="quiz-main-button"
+        disabled>
+        Check answer
+      </button>
+
+      <div
+        id="quiz-feedback"
+        class="quiz-feedback"
+        aria-live="polite"
+        hidden>
+      </div>
+
+      <button
+        type="button"
+        id="quiz-next"
+        class="quiz-next-button"
+        hidden>
+        Next question
+      </button>
+
+    </div>
+
+
+    <!-- Final Result -->
+    <div id="quiz-result" hidden>
+
+      <div class="quiz-result-icon" id="quiz-result-icon">
+        ✓
+      </div>
+
+      <h3 id="quiz-result-heading">
+        Quiz completed!
+      </h3>
+
+      <p class="quiz-final-score" id="quiz-final-score">
+        You scored 0 out of 5.
+      </p>
+
+      <p id="quiz-result-message" class="quiz-result-message">
+        Well done for completing the quiz!
+      </p>
+
+      <button
+        type="button"
+        id="quiz-restart"
+        class="quiz-main-button">
+        Try again
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* ==============================
+   MAIN CONTAINER
+============================== */
+
+#fingerprint-quiz {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(18px, 4vw, 42px);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+#fingerprint-quiz * {
+  box-sizing: border-box;
+}
+
+
+/* ==============================
+   HEADING
+============================== */
+
+#fingerprint-quiz h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 10px;
+}
+
+#fingerprint-quiz .quiz-intro {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 24px;
+  max-width: 850px;
+}
+
+
+/* ==============================
+   QUIZ CARD
+============================== */
+
+#fingerprint-quiz .quiz-card {
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid #dce3e9;
+  border-radius: 13px;
+  background: #FFFFFF;
+}
+
+
+/* ==============================
+   PROGRESS
+============================== */
+
+#fingerprint-quiz .quiz-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  color: #073763;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+#fingerprint-quiz .quiz-progress-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 20px;
+  background: #e7edf2;
+  overflow: hidden;
+  margin-bottom: 27px;
+}
+
+#fingerprint-quiz #quiz-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #249bd4;
+  border-radius: 20px;
+  transition: width 0.25s ease;
+}
+
+
+/* ==============================
+   QUESTION
+============================== */
+
+#fingerprint-quiz #quiz-question {
+  font-family: "Times New Roman", Times, serif;
+  color: #073763;
+  font-size: clamp(21px, 2.5vw, 27px);
+  line-height: 1.4;
+  margin: 0 0 9px;
+}
+
+#fingerprint-quiz .quiz-instruction {
+  color: #596774;
+  font-size: 13px;
+  margin: 0 0 17px;
+}
+
+
+/* ==============================
+   ANSWER OPTIONS
+============================== */
+
+#fingerprint-quiz #quiz-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+#fingerprint-quiz .quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 13px 15px;
+  border: 1.5px solid #d5dee6;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #17232d;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease,
+              border-color 0.15s ease;
+}
+
+#fingerprint-quiz .quiz-option:hover:not(:disabled) {
+  background: #f3f7fa;
+  border-color: #249bd4;
+}
+
+#fingerprint-quiz .quiz-option:focus-visible {
+  outline: 3px solid #f0a52b;
+  outline-offset: 2px;
+}
+
+#fingerprint-quiz .quiz-option:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+#fingerprint-quiz .option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  min-width: 27px;
+  border-radius: 50%;
+  background: #eaf2f8;
+  color: #073763;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+#fingerprint-quiz .quiz-option.selected {
+  border-color: #073763;
+  background: #edf4f9;
+}
+
+#fingerprint-quiz .quiz-option.correct {
+  border-color: #188a50;
+  background: #edf8f1;
+}
+
+#fingerprint-quiz .quiz-option.correct .option-letter {
+  background: #188a50;
+  color: #FFFFFF;
+}
+
+#fingerprint-quiz .quiz-option.incorrect {
+  border-color: #c74740;
+  background: #fff1f0;
+}
+
+#fingerprint-quiz .quiz-option.incorrect .option-letter {
+  background: #c74740;
+  color: #FFFFFF;
+}
+
+
+/* ==============================
+   BUTTONS
+============================== */
+
+#fingerprint-quiz .quiz-main-button,
+#fingerprint-quiz .quiz-next-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 45px;
+  padding: 11px 22px;
+  border: none;
+  border-radius: 7px;
+  background: #073763;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#fingerprint-quiz .quiz-main-button:hover:not(:disabled),
+#fingerprint-quiz .quiz-next-button:hover {
+  background: #0b548e;
+}
+
+#fingerprint-quiz .quiz-main-button:disabled {
+  background: #aebbc6;
+  color: #FFFFFF;
+  cursor: not-allowed;
+}
+
+#fingerprint-quiz button:focus-visible {
+  outline: 3px solid #f0a52b;
+  outline-offset: 3px;
+}
+
+#fingerprint-quiz .quiz-next-button {
+  background: #18804a;
+}
+
+#fingerprint-quiz .quiz-next-button:hover {
+  background: #12683b;
+}
+
+
+/* ==============================
+   FEEDBACK
+============================== */
+
+#fingerprint-quiz .quiz-feedback {
+  margin-top: 17px;
+  padding: 15px 17px;
+  border-radius: 8px;
+  background: #f1f5f8;
+  border-left: 4px solid #249bd4;
+}
+
+#fingerprint-quiz .quiz-feedback.correct-feedback {
+  background: #eff8f2;
+  border-left-color: #188a50;
+}
+
+#fingerprint-quiz .quiz-feedback.incorrect-feedback {
+  background: #fff3f1;
+  border-left-color: #c74740;
+}
+
+#fingerprint-quiz .quiz-feedback strong {
+  display: block;
+  color: #073763;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+#fingerprint-quiz .quiz-feedback p {
+  color: #303a43;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+
+/* ==============================
+   FINAL RESULT
+============================== */
+
+#fingerprint-quiz #quiz-result {
+  text-align: center;
+  padding: 15px 5px 5px;
+}
+
+#fingerprint-quiz .quiz-result-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 17px;
+  border-radius: 50%;
+  background: #eaf2f8;
+  color: #073763;
+  font-size: 29px;
+  font-weight: bold;
+}
+
+#fingerprint-quiz #quiz-result-heading {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 28px;
+  color: #073763;
+  margin: 0 0 12px;
+}
+
+#fingerprint-quiz .quiz-final-score {
+  font-size: 21px;
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 10px;
+}
+
+#fingerprint-quiz .quiz-result-message {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #414c57;
+  margin: 0 auto;
+  max-width: 550px;
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 600px) {
+
+  #fingerprint-quiz {
+    padding: 20px 12px;
+  }
+
+  #fingerprint-quiz .quiz-card {
+    padding: 17px 13px;
+  }
+
+  #fingerprint-quiz .quiz-option {
+    font-size: 13px;
+    padding: 12px 10px;
+  }
+
+  #fingerprint-quiz .quiz-main-button,
+  #fingerprint-quiz .quiz-next-button {
+    width: 100%;
+  }
+
+}
+
+
+/* ==============================
+   REDUCED MOTION
+============================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #fingerprint-quiz *,
+  #fingerprint-quiz *::before,
+  #fingerprint-quiz *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+(() => {
+
+  const root = document.getElementById("fingerprint-quiz");
+
+  if (!root || root.dataset.ready === "true") {
+    return;
+  }
+
+  root.dataset.ready = "true";
+
+
+  /* =================================
+     QUIZ QUESTIONS
+  ================================= */
+
+  const questions = [
+
+    {
+      question:
+        "What are the raised parts of a fingerprint called?",
+
+      options: [
+        "Valleys",
+        "Ridges",
+        "Minutiae",
+        "Electrodes"
+      ],
+
+      answer: 1,
+
+      explanation:
+        "Ridges are the raised lines of a fingerprint. Valleys are the lower areas between them."
+    },
+
+
+    {
+      question:
+        "Which fingerprint pattern family has ridges that enter from one side, curve around and exit from the same side?",
+
+      options: [
+        "Arch",
+        "Whorl",
+        "Loop",
+        "Enclosure"
+      ],
+
+      answer: 2,
+
+      explanation:
+        "A loop has ridges that enter from one side, curve around and exit from the same side. Arches generally enter one side and leave the other, while whorls have circular or spiral-like patterns."
+    },
+
+
+    {
+      question:
+        "What happens during a bifurcation?",
+
+      options: [
+        "A ridge stops abruptly",
+        "A ridge divides into two branches",
+        "Two fingerprints are joined",
+        "A ridge forms a circular pattern"
+      ],
+
+      answer: 1,
+
+      explanation:
+        "A bifurcation is a minutia where one fingerprint ridge divides into two branches."
+    },
+
+
+    {
+      question:
+        "How does a capacitive fingerprint sensor distinguish ridges from valleys?",
+
+      options: [
+        "It measures differences in capacitance",
+        "It measures the temperature of each ridge",
+        "It takes an ordinary photograph",
+        "It measures the colour of the skin"
+      ],
+
+      answer: 0,
+
+      explanation:
+        "Ridges are closer to the sensor's sensing elements, while valleys have a greater separation, often with small air gaps. This creates different capacitance readings that can be converted into digital values."
+    },
+
+
+    {
+      question:
+        "Which information is particularly important when comparing fingerprint minutiae?",
+
+      options: [
+        "The colour and temperature of the finger",
+        "The size of the phone screen",
+        "The positions and directions of the minutiae",
+        "The brightness of the room"
+      ],
+
+      answer: 2,
+
+      explanation:
+        "Fingerprint comparison can use the type, position and direction of minutiae. Matching systems also account for differences in placement and orientation between fingerprint samples."
+    }
+
+  ];
+
+
+  /* =================================
+     ELEMENT REFERENCES
+  ================================= */
+
+  const questionArea =
+    root.querySelector("#quiz-question-area");
+
+  const questionTitle =
+    root.querySelector("#quiz-question");
+
+  const optionsArea =
+    root.querySelector("#quiz-options");
+
+  const checkButton =
+    root.querySelector("#quiz-check");
+
+  const nextButton =
+    root.querySelector("#quiz-next");
+
+  const feedback =
+    root.querySelector("#quiz-feedback");
+
+  const progressText =
+    root.querySelector("#quiz-progress-text");
+
+  const scorePreview =
+    root.querySelector("#quiz-score-preview");
+
+  const progressFill =
+    root.querySelector("#quiz-progress-fill");
+
+  const progressBar =
+    root.querySelector("#quiz-progress-bar");
+
+  const resultArea =
+    root.querySelector("#quiz-result");
+
+
+  /* =================================
+     QUIZ STATE
+  ================================= */
+
+  let currentQuestion = 0;
+
+  let selectedAnswer = null;
+
+  let score = 0;
+
+  let answered = false;
+
+
+  /* =================================
+     SHOW A QUESTION
+  ================================= */
+
+  function showQuestion() {
+
+    const q = questions[currentQuestion];
+
+    selectedAnswer = null;
+    answered = false;
+
+
+    questionTitle.textContent = q.question;
+
+    optionsArea.replaceChildren();
+
+    feedback.hidden = true;
+
+    feedback.className = "quiz-feedback";
+
+    nextButton.hidden = true;
+
+    checkButton.hidden = false;
+
+    checkButton.disabled = true;
+
+
+    progressText.textContent =
+      "Question " +
+      (currentQuestion + 1) +
+      " of " +
+      questions.length;
+
+
+    scorePreview.textContent =
+      "Score: " + score;
+
+
+    const progress =
+      (currentQuestion / questions.length) * 100;
+
+    progressFill.style.width = progress + "%";
+
+    progressBar.setAttribute(
+      "aria-valuenow",
+      String(currentQuestion)
+    );
+
+
+    const letters = ["A", "B", "C", "D"];
+
+
+    q.options.forEach((option, index) => {
+
+      const button = document.createElement("button");
+
+      button.type = "button";
+
+      button.className = "quiz-option";
+
+      button.setAttribute("aria-pressed", "false");
+
+
+      const letter = document.createElement("span");
+
+      letter.className = "option-letter";
+
+      letter.textContent = letters[index];
+
+
+      const text = document.createElement("span");
+
+      text.textContent = option;
+
+
+      button.appendChild(letter);
+
+      button.appendChild(text);
+
+
+      button.addEventListener("click", () => {
+
+        if (answered) {
+          return;
+        }
+
+        selectedAnswer = index;
+
+
+        optionsArea.querySelectorAll(".quiz-option").forEach(
+          (optionButton, optionIndex) => {
+
+            const isSelected = optionIndex === index;
+
+            optionButton.classList.toggle(
+              "selected",
+              isSelected
+            );
+
+            optionButton.setAttribute(
+              "aria-pressed",
+              isSelected ? "true" : "false"
+            );
+
+          }
+        );
+
+
+        checkButton.disabled = false;
+
+      });
+
+
+      optionsArea.appendChild(button);
+
+    });
+
+  }
+
+
+  /* =================================
+     CHECK THE ANSWER
+  ================================= */
+
+  function checkAnswer() {
+
+    if (answered || selectedAnswer === null) {
+      return;
+    }
+
+    answered = true;
+
+    const q = questions[currentQuestion];
+
+    const correct = selectedAnswer === q.answer;
+
+
+    if (correct) {
+      score++;
+    }
+
+
+    const optionButtons =
+      optionsArea.querySelectorAll(".quiz-option");
+
+
+    optionButtons.forEach((button, index) => {
+
+      button.disabled = true;
+
+      if (index === q.answer) {
+        button.classList.add("correct");
+      }
+
+      if (index === selectedAnswer && !correct) {
+        button.classList.add("incorrect");
+      }
+
+    });
+
+
+    scorePreview.textContent =
+      "Score: " + score;
+
+
+    feedback.hidden = false;
+
+    feedback.classList.add(
+      correct
+        ? "correct-feedback"
+        : "incorrect-feedback"
+    );
+
+
+    const heading = document.createElement("strong");
+
+    heading.textContent = correct
+      ? "Correct!"
+      : "Not quite. The correct answer is " +
+        ["A", "B", "C", "D"][q.answer] +
+        ".";
+
+
+    const explanation = document.createElement("p");
+
+    explanation.textContent = q.explanation;
+
+
+    feedback.replaceChildren(heading, explanation);
+
+
+    checkButton.hidden = true;
+
+    nextButton.hidden = false;
+
+
+    nextButton.textContent =
+      currentQuestion === questions.length - 1
+        ? "See my result"
+        : "Next question";
+
+  }
+
+
+  /* =================================
+     MOVE TO THE NEXT QUESTION
+  ================================= */
+
+  function nextQuestion() {
+
+    if (!answered) {
+      return;
+    }
+
+
+    currentQuestion++;
+
+
+    if (currentQuestion >= questions.length) {
+
+      showResults();
+
+    } else {
+
+      showQuestion();
+
+    }
+
+  }
+
+
+  /* =================================
+     SHOW FINAL RESULT
+  ================================= */
+
+  function showResults() {
+
+    questionArea.hidden = true;
+
+    resultArea.hidden = false;
+
+
+    progressFill.style.width = "100%";
+
+    progressBar.setAttribute(
+      "aria-valuenow",
+      String(questions.length)
+    );
+
+
+    root.querySelector("#quiz-final-score").textContent =
+      "You scored " + score + " out of " + questions.length + ".";
+
+
+    let heading;
+    let message;
+    let symbol;
+
+
+    if (score === 5) {
+
+      heading = "Excellent work!";
+
+      message =
+        "You answered every question correctly. You have a strong understanding of fingerprint structure, sensing and template matching.";
+
+      symbol = "★";
+
+    } else if (score >= 3) {
+
+      heading = "Good work!";
+
+      message =
+        "You have understood most of the concepts. Revisit the sections where you would like to strengthen your knowledge.";
+
+      symbol = "✓";
+
+    } else {
+
+      heading = "Keep learning!";
+
+      message =
+        "There is still more to explore. Review the fingerprint sections and try the quiz again.";
+
+      symbol = "↻";
+
+    }
+
+
+    root.querySelector("#quiz-result-heading").textContent =
+      heading;
+
+    root.querySelector("#quiz-result-message").textContent =
+      message;
+
+    root.querySelector("#quiz-result-icon").textContent =
+      symbol;
+
+    scorePreview.textContent =
+      "Final score: " + score + "/5";
+
+    progressText.textContent = "Quiz completed";
+
+  }
+
+
+  /* =================================
+     RESTART THE QUIZ
+  ================================= */
+
+  function restartQuiz() {
+
+    currentQuestion = 0;
+
+    selectedAnswer = null;
+
+    score = 0;
+
+    answered = false;
+
+
+    resultArea.hidden = true;
+
+    questionArea.hidden = false;
+
+
+    showQuestion();
+
+  }
+
+
+  /* =================================
+     EVENT LISTENERS
+  ================================= */
+
+  checkButton.addEventListener("click", checkAnswer);
+
+  nextButton.addEventListener("click", nextQuestion);
+
+  root.querySelector("#quiz-restart").addEventListener(
+    "click",
+    restartQuiz
+  );
+
+
+  /* =================================
+     START THE QUIZ
+  ================================= */
+
+  showQuestion();
+
+
+})();
+
+</script>

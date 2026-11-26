@@ -1,0 +1,1040 @@
+<div id="fingerprint-match-lab">
+
+  <!-- ==============================
+       MAIN INTRODUCTION
+  =============================== -->
+
+  <header class="lab-header">
+    <h2>Fingerprint Template Matching</h2>
+
+    <p>
+      Build two fingerprints by selecting their pattern families and
+      placing minutiae on their ridges. Then try to align their templates
+      to see whether they match.
+    </p>
+  </header>
+
+
+  <!-- ==============================
+       STEP 1: BUILD FINGERPRINTS
+  =============================== -->
+
+  <section class="lab-section">
+
+    <h3>1. Build the fingerprints</h3>
+
+    <p class="section-description">
+      Choose a type of minutia, then click or tap directly on a ridge
+      in either fingerprint. The selected feature will snap to the
+      nearest ridge.
+    </p>
+
+
+    <!-- MINUTIA SELECTION -->
+
+    <div class="tool-panel">
+
+      <p class="tool-heading">Select a minutia to place</p>
+
+      <div class="feature-tools">
+
+        <button
+          type="button"
+          class="feature-tool active"
+          data-tool="ending"
+          aria-pressed="true">
+
+          <span class="tool-symbol tool-circle"></span>
+          Ridge ending
+
+        </button>
+
+
+        <button
+          type="button"
+          class="feature-tool"
+          data-tool="bifurcation"
+          aria-pressed="false">
+
+          <span class="tool-symbol tool-square"></span>
+          Bifurcation
+
+        </button>
+
+      </div>
+
+      <p class="tool-description" id="selected-tool-description">
+        Ridge ending selected. Click or tap a ridge to place it.
+      </p>
+
+    </div>
+
+
+    <!-- TWO FINGERPRINT MAKERS -->
+
+    <div class="print-grid">
+
+
+      <!-- STORED FINGERPRINT -->
+
+      <article class="print-card">
+
+        <div class="print-card-heading">
+
+          <div>
+            <h4>Stored fingerprint</h4>
+
+            <p>
+              The original fingerprint sample
+            </p>
+          </div>
+
+          <span class="side-number">A</span>
+
+        </div>
+
+
+        <label class="family-label" for="stored-family">
+          Pattern family
+        </label>
+
+        <select id="stored-family" class="family-select">
+
+          <option value="arch">Arch</option>
+          <option value="loop" selected>Loop</option>
+          <option value="whorl">Whorl</option>
+
+        </select>
+
+
+        <div class="fingerprint-canvas">
+
+          <svg
+            id="stored-svg"
+            class="fingerprint-svg"
+            viewBox="0 0 320 380"
+            role="img"
+            aria-label="Stored fingerprint. Click on a ridge to place a minutia.">
+          </svg>
+
+        </div>
+
+
+        <div class="fingerprint-card-footer">
+
+          <span id="stored-count">0 minutiae placed</span>
+
+          <button
+            type="button"
+            class="clear-button"
+            id="clear-stored">
+            Clear points
+          </button>
+
+        </div>
+
+        <p class="side-status" id="stored-status">
+          Choose a minutia and tap a ridge.
+        </p>
+
+      </article>
+
+
+
+      <!-- FINGERPRINT TO COMPARE -->
+
+      <article class="print-card">
+
+        <div class="print-card-heading">
+
+          <div>
+            <h4>Fingerprint to compare</h4>
+
+            <p>
+              The new fingerprint sample
+            </p>
+          </div>
+
+          <span class="side-number">B</span>
+
+        </div>
+
+
+        <label class="family-label" for="compare-family">
+          Pattern family
+        </label>
+
+        <select id="compare-family" class="family-select">
+
+          <option value="arch">Arch</option>
+          <option value="loop" selected>Loop</option>
+          <option value="whorl">Whorl</option>
+
+        </select>
+
+
+        <div class="fingerprint-canvas">
+
+          <svg
+            id="compare-svg"
+            class="fingerprint-svg"
+            viewBox="0 0 320 380"
+            role="img"
+            aria-label="Fingerprint to compare. Click on a ridge to place a minutia.">
+          </svg>
+
+        </div>
+
+
+        <div class="fingerprint-card-footer">
+
+          <span id="compare-count">0 minutiae placed</span>
+
+          <button
+            type="button"
+            class="clear-button"
+            id="clear-compare">
+            Clear points
+          </button>
+
+        </div>
+
+        <p class="side-status" id="compare-status">
+          Choose a minutia and tap a ridge.
+        </p>
+
+      </article>
+
+    </div>
+
+
+
+    <!-- MAKE IDENTICAL BUTTON -->
+
+    <div class="copy-fingerprint-panel">
+
+      <div class="copy-text">
+
+        <strong>Want to test an identical fingerprint?</strong>
+
+        <p>
+          Copy the stored fingerprint's pattern and minutiae to the
+          comparison side. You can then rotate or move the new template
+          to try matching them again.
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        id="copy-stored"
+        class="copy-button">
+
+        Make comparison fingerprint identical
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ==============================
+       STEP 2: TEMPLATE COMPARISON
+  =============================== -->
+
+  <section class="lab-section match-section">
+
+    <h3>2. Align the fingerprint templates</h3>
+
+    <p class="section-description">
+      The stored fingerprint's minutiae are shown as outlined
+      tolerance zones. The comparison fingerprint's minutiae are
+      shown as filled circles or squares. Rotate and move the
+      comparison template horizontally to try to align them.
+    </p>
+
+
+    <!-- ALIGNMENT SLIDERS -->
+
+    <div class="alignment-panel">
+
+
+      <!-- ROTATION -->
+
+      <div class="slider-control">
+
+        <div class="slider-heading">
+
+          <label for="rotation-slider">
+            Rotation
+          </label>
+
+          <output id="rotation-value">0°</output>
+
+        </div>
+
+        <input
+          type="range"
+          id="rotation-slider"
+          min="-35"
+          max="35"
+          value="0"
+          step="1">
+
+        <div class="slider-endpoints">
+          <span>−35°</span>
+          <span>0°</span>
+          <span>+35°</span>
+        </div>
+
+      </div>
+
+
+
+      <!-- HORIZONTAL MOVEMENT -->
+
+      <div class="slider-control">
+
+        <div class="slider-heading">
+
+          <label for="horizontal-slider">
+            Horizontal movement
+          </label>
+
+          <output id="horizontal-value">0</output>
+
+        </div>
+
+        <input
+          type="range"
+          id="horizontal-slider"
+          min="-100"
+          max="100"
+          value="0"
+          step="1">
+
+        <div class="slider-endpoints">
+          <span>Left</span>
+          <span>Centre</span>
+          <span>Right</span>
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="reset-alignment"
+        class="reset-button">
+
+        Reset alignment
+
+      </button>
+
+    </div>
+
+
+
+    <!-- TEMPLATE LEGEND -->
+
+    <div class="template-legend">
+
+      <div class="legend-item">
+
+        <span class="legend-circle"></span>
+
+        <span>Stored ridge ending zone</span>
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-square"></span>
+
+        <span>Stored bifurcation zone</span>
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-filled-circle"></span>
+
+        <span>Comparison ridge ending</span>
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-filled-square"></span>
+
+        <span>Comparison bifurcation</span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- TEMPLATE OVERLAY -->
+
+    <div class="template-stage">
+
+      <svg
+        id="template-map"
+        viewBox="0 0 720 420"
+        role="img"
+        aria-label="Fingerprint template alignment diagram">
+
+      </svg>
+
+    </div>
+
+
+    <p class="template-instruction">
+      Green outlines indicate matched stored features.
+      Red outlines indicate stored features without a matching
+      comparison feature.
+    </p>
+
+
+
+    <!-- MATCH RESULT -->
+
+    <div class="result-panel" id="match-result">
+
+      <div class="result-top">
+
+        <span class="result-label">Comparison result</span>
+
+        <strong id="match-score">0%</strong>
+
+      </div>
+
+
+      <div class="result-status" id="match-status">
+        Add minutiae to both fingerprints to begin comparing.
+      </div>
+
+
+      <p class="result-detail" id="match-detail">
+        The matching result will update as you adjust the alignment.
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ==============================
+       SCIENTIFIC NOTE
+  =============================== -->
+
+  <div class="science-note">
+
+    <strong>How this simulation works</strong>
+
+    <p>
+      The activity compares the type, position and direction of
+      manually placed minutiae. A stored feature is counted as
+      matched when a corresponding comparison feature falls within
+      its tolerance zone and has a sufficiently similar direction.
+    </p>
+
+    <p>
+      This is a simplified educational model. Real fingerprint
+      recognition systems use more advanced image processing,
+      feature extraction and matching techniques.
+    </p>
+
+  </div>
+
+
+</div>
+
+
+
+<style>
+
+/* =================================
+   MAIN CONTAINER
+================================= */
+
+#fingerprint-match-lab {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(18px, 3vw, 42px);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+#fingerprint-match-lab * {
+  box-sizing: border-box;
+}
+
+
+/* =================================
+   MAIN HEADING
+================================= */
+
+#fingerprint-match-lab h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 12px;
+}
+
+#fingerprint-match-lab .lab-header > p {
+  max-width: 900px;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 32px;
+}
+
+
+/* =================================
+   SECTION HEADINGS
+================================= */
+
+#fingerprint-match-lab .lab-section {
+  margin-top: 32px;
+}
+
+#fingerprint-match-lab .lab-section h3 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(23px, 2.5vw, 29px);
+  color: #073763;
+  margin: 0 0 9px;
+}
+
+#fingerprint-match-lab .section-description {
+  max-width: 900px;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 22px;
+}
+
+
+/* =================================
+   TOOL PANEL
+================================= */
+
+#fingerprint-match-lab .tool-panel {
+  padding: 17px 20px;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+  background: #f8fafc;
+  margin-bottom: 22px;
+}
+
+#fingerprint-match-lab .tool-heading {
+  font-size: 14px;
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 12px;
+}
+
+#fingerprint-match-lab .feature-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#fingerprint-match-lab .feature-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 16px;
+  background: #FFFFFF;
+  border: 1.5px solid #cbd5df;
+  border-radius: 8px;
+  color: #000000;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s;
+}
+
+#fingerprint-match-lab .feature-tool.active {
+  border-color: #073763;
+  background: #eaf2f8;
+  color: #073763;
+  font-weight: bold;
+}
+
+#fingerprint-match-lab .feature-tool:focus-visible,
+#fingerprint-match-lab button:focus-visible,
+#fingerprint-match-lab select:focus-visible {
+  outline: 3px solid #f0a52b;
+  outline-offset: 3px;
+}
+
+#fingerprint-match-lab .tool-symbol {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+
+#fingerprint-match-lab .tool-circle {
+  border: 2px solid #d58b13;
+  border-radius: 50%;
+  background: #f0b64e;
+}
+
+#fingerprint-match-lab .tool-square {
+  border: 2px solid #126da2;
+  background: #249bd4;
+}
+
+#fingerprint-match-lab .tool-description {
+  font-size: 12px;
+  color: #4d5965;
+  margin: 11px 0 0;
+}
+
+
+/* =================================
+   FINGERPRINT CARDS
+================================= */
+
+#fingerprint-match-lab .print-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+#fingerprint-match-lab .print-card {
+  min-width: 0;
+  padding: clamp(13px, 2vw, 22px);
+  border: 1px solid #dce3e9;
+  border-radius: 13px;
+  background: #FFFFFF;
+}
+
+#fingerprint-match-lab .print-card-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#fingerprint-match-lab .print-card-heading h4 {
+  font-family: "Times New Roman", Times, serif;
+  color: #073763;
+  font-size: clamp(20px, 2.1vw, 24px);
+  margin: 0 0 4px;
+}
+
+#fingerprint-match-lab .print-card-heading p {
+  color: #5b6570;
+  font-size: 12px;
+  margin: 0;
+}
+
+#fingerprint-match-lab .side-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #eaf2f8;
+  color: #073763;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  flex: 0 0 auto;
+}
+
+
+/* =================================
+   FAMILY SELECTORS
+================================= */
+
+#fingerprint-match-lab .family-label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 0 0 7px;
+  color: #253849;
+}
+
+#fingerprint-match-lab .family-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: #FFFFFF;
+  border: 1px solid #b9c6d1;
+  border-radius: 7px;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+
+/* =================================
+   FINGERPRINT DRAWING AREA
+================================= */
+
+#fingerprint-match-lab .fingerprint-canvas {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border: 1px solid #e3e8ed;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+#fingerprint-match-lab .fingerprint-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+
+/* Generated ridge lines */
+
+#fingerprint-match-lab .ridge-line {
+  fill: none;
+  stroke: #17232d;
+  stroke-width: 2.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* Local white masks used to shape minutiae */
+
+#fingerprint-match-lab .feature-mask {
+  fill: #FFFFFF;
+  stroke: none;
+}
+
+
+/* Ridge ending */
+
+#fingerprint-match-lab .ending-detail {
+  fill: none;
+  stroke: #17232d;
+  stroke-width: 2.7;
+  stroke-linecap: round;
+}
+
+#fingerprint-match-lab .ending-tip {
+  fill: #f0a52b;
+  stroke: #FFFFFF;
+  stroke-width: 1.5;
+}
+
+
+/* Bifurcation */
+
+#fingerprint-match-lab .bifurcation-detail {
+  fill: none;
+  stroke: #17232d;
+  stroke-width: 2.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#fingerprint-match-lab .bifurcation-tip {
+  fill: #249bd4;
+  stroke: #FFFFFF;
+  stroke-width: 1.2;
+}
+
+
+/* =================================
+   FINGERPRINT CARD FOOTER
+================================= */
+
+#fingerprint-match-lab .fingerprint-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+#fingerprint-match-lab .fingerprint-card-footer span {
+  font-size: 12px;
+  color: #475462;
+}
+
+#fingerprint-match-lab .clear-button {
+  padding: 7px 11px;
+  border: 1px solid #cbd5df;
+  border-radius: 6px;
+  background: #FFFFFF;
+  color: #273746;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#fingerprint-match-lab .clear-button:hover {
+  background: #f1f5f8;
+}
+
+#fingerprint-match-lab .side-status {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #53616e;
+  min-height: 18px;
+  margin: 9px 0 0;
+}
+
+
+/* =================================
+   COPY FINGERPRINT PANEL
+================================= */
+
+#fingerprint-match-lab .copy-fingerprint-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+  margin-top: 22px;
+  background: #f8fafc;
+}
+
+#fingerprint-match-lab .copy-text {
+  min-width: 0;
+}
+
+#fingerprint-match-lab .copy-text strong {
+  color: #073763;
+  font-size: 14px;
+}
+
+#fingerprint-match-lab .copy-text p {
+  color: #333333;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 6px 0 0;
+}
+
+#fingerprint-match-lab .copy-button {
+  flex: 0 0 auto;
+  padding: 11px 15px;
+  border: none;
+  border-radius: 7px;
+  background: #073763;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#fingerprint-match-lab .copy-button:hover {
+  background: #0b548e;
+}
+
+
+/* =================================
+   ALIGNMENT PANEL
+================================= */
+
+#fingerprint-match-lab .match-section {
+  margin-top: 42px;
+}
+
+#fingerprint-match-lab .alignment-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+  padding: 19px;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+#fingerprint-match-lab .slider-control {
+  min-width: 0;
+}
+
+#fingerprint-match-lab .slider-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+
+#fingerprint-match-lab .slider-heading label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #073763;
+}
+
+#fingerprint-match-lab .slider-heading output {
+  font-size: 14px;
+  font-weight: bold;
+  color: #073763;
+  font-variant-numeric: tabular-nums;
+}
+
+#fingerprint-match-lab input[type="range"] {
+  display: block;
+  width: 100%;
+  accent-color: #073763;
+  cursor: pointer;
+}
+
+#fingerprint-match-lab .slider-endpoints {
+  display: flex;
+  justify-content: space-between;
+  color: #687480;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+#fingerprint-match-lab .reset-button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 9px 14px;
+  border: 1px solid #b9c6d1;
+  border-radius: 7px;
+  background: #FFFFFF;
+  color: #073763;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#fingerprint-match-lab .reset-button:hover {
+  background: #eef4f8;
+}
+
+
+/* =================================
+   TEMPLATE LEGEND
+================================= */
+
+#fingerprint-match-lab .template-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px 22px;
+  margin: 21px 0 13px;
+}
+
+#fingerprint-match-lab .legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #34414e;
+  font-size: 11px;
+}
+
+#fingerprint-match-lab .legend-circle,
+#fingerprint-match-lab .legend-square,
+#fingerprint-match-lab .legend-filled-circle,
+#fingerprint-match-lab .legend-filled-square {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+
+#fingerprint-match-lab .legend-circle {
+  border: 2px dashed #d34b42;
+  border-radius: 50%;
+}
+
+#fingerprint-match-lab .legend-square {
+  border: 2px dashed #d34b42;
+}
+
+#fingerprint-match-lab .legend-filled-circle {
+  background: #f0a52b;
+  border-radius: 50%;
+}
+
+#fingerprint-match-lab .legend-filled-square {
+  background: #249bd4;
+}
+
+
+/* =================================
+   TEMPLATE MAP
+================================= */
+
+#fingerprint-match-lab .template-stage {
+  width: 100%;
+  border: 1px solid #dce3e9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+#fingerprint-match-lab #template-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+}
+
+#fingerprint-match-lab .template-background {
+  fill: #FFFFFF;
+  stroke: #e4e9ed;
+  stroke-width: 1.2;
+}
+
+
+/* Stored tolerance zones */
+
+#fingerprint-match-lab .match-zone {
+  fill: rgba(211, 75, 66, 0.08);
+  stroke: #d34b42;
+  stroke-width: 2.5;
+  stroke-dasharray: 5 3;
+}
+
+#fingerprint-match-lab .match-zone.matched {
+  fill: rgba(30, 142, 75, 0.10);
+  stroke: #188a50;
+}
+
+#fingerprint-match-lab .match-zone.unmatched {
+  fill: rgba(211, 75, 66, 0.08);
+  stroke: #d34b42;
+}
+
+
+/* Comparison minutiae */
+
+#fingerprint-match-lab .new-ending-point {
+  fill: #f0a52b;
+  stroke: #8e5e0d;
+  stroke-width: 1.5;
+}
+
+#fingerprint-match-lab .new-bifurcation-point {
+  fill: #249bd4;
+  stroke: #07537d;
+  stroke-width: 1.5;
+}
+
+
+/* Text inside SVG */
+
+#fi

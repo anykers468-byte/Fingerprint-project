@@ -1,0 +1,522 @@
+<div id="fingerprint-minutiae">
+
+  <h2>Minutiae: the fine details</h2>
+
+  <p class="intro">
+    Fingerprint patterns group prints. Minutiae provide the smaller details
+    that help distinguish one fingerprint from another.
+  </p>
+
+  <div class="minutiae-grid">
+
+    <!-- Ridge ending -->
+    <article class="minutiae-card">
+
+      <div class="minutiae-illustration">
+        <svg viewBox="0 0 460 260"
+             role="img"
+             aria-label="Illustration of a ridge ending">
+
+          <path class="guide" d="M30 65 H430"/>
+          <path class="guide" d="M30 195 H430"/>
+
+          <path class="ridge" d="M30 130 H225"/>
+
+        </svg>
+      </div>
+
+      <div class="feature-information">
+        <h3>1. Ridge ending</h3>
+
+        <p>
+          A ridge ending occurs when a friction ridge terminates within
+          the fingerprint instead of continuing further.
+        </p>
+
+        <p class="feature-extra">
+          Fingerprint systems can record the location and direction
+          of this ridge ending.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Bifurcation -->
+    <article class="minutiae-card">
+
+      <div class="minutiae-illustration">
+        <svg viewBox="0 0 460 260"
+             role="img"
+             aria-label="Illustration of a bifurcation">
+
+          <path class="guide" d="M30 65 H430"/>
+          <path class="guide" d="M30 195 H430"/>
+
+          <path class="ridge" d="M30 130 H205"/>
+          <path class="ridge" d="M205 130 C260 130 285 75 430 75"/>
+          <path class="ridge" d="M205 130 C260 130 285 185 430 185"/>
+
+        </svg>
+      </div>
+
+      <div class="feature-information">
+        <h3>2. Bifurcation</h3>
+
+        <p>
+          A bifurcation occurs when one friction ridge divides into
+          two separate ridges that continue beyond the split.
+        </p>
+
+        <p class="feature-extra">
+          The point where the ridge divides is an important location
+          for fingerprint comparison.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Dot -->
+    <article class="minutiae-card">
+
+      <div class="minutiae-illustration">
+        <svg viewBox="0 0 460 260"
+             role="img"
+             aria-label="Illustration of a dot minutia">
+
+          <path class="guide" d="M30 65 H430"/>
+          <path class="guide" d="M30 195 H430"/>
+
+          <path class="ridge" d="M30 130 H145"/>
+          <path class="ridge" d="M315 130 H430"/>
+          <path class="ridge" d="M205 130 H220"/>
+
+        </svg>
+      </div>
+
+      <div class="feature-information">
+        <h3>3. Dot</h3>
+
+        <p>
+          A dot is a very short, isolated ridge fragment.
+          It is much shorter than an ordinary ridge.
+        </p>
+
+        <p class="feature-extra">
+          Its identification depends on the quality and detail
+          of the fingerprint image.
+        </p>
+      </div>
+
+    </article>
+
+
+    <!-- Enclosure -->
+    <article class="minutiae-card">
+
+      <div class="minutiae-illustration">
+        <svg viewBox="0 0 460 260"
+             role="img"
+             aria-label="Illustration of an enclosure">
+
+          <path class="guide" d="M30 65 H430"/>
+          <path class="guide" d="M30 195 H430"/>
+
+          <path class="ridge" d="M30 130 H135"/>
+
+          <path class="ridge"
+                d="M135 130 C165 130 175 95 215 95
+                   C255 95 265 130 295 130"/>
+
+          <path class="ridge"
+                d="M135 130 C165 130 175 165 215 165
+                   C255 165 265 130 295 130"/>
+
+          <path class="ridge" d="M295 130 H430"/>
+
+        </svg>
+      </div>
+
+      <div class="feature-information">
+        <h3>4. Enclosure</h3>
+
+        <p>
+          An enclosure occurs when a ridge splits into two branches
+          and then rejoins, creating a small enclosed space.
+        </p>
+
+        <p class="feature-extra">
+          The enclosed shape is sometimes described as a lake
+          or eye-shaped feature.
+        </p>
+      </div>
+
+    </article>
+
+  </div>
+
+
+  <!-- Replay button -->
+
+  <div class="animation-controls">
+    <button type="button" id="replay-minutiae">
+      <span aria-hidden="true">↻</span>
+      Replay ridge animation
+    </button>
+  </div>
+
+
+  <!-- Additional explanation -->
+
+  <div class="minutiae-note">
+    <strong>Why do minutiae matter?</strong>
+
+    <p>
+      Fingerprint recognition systems can use the positions and directions
+      of minutiae to compare fingerprint samples. The quality of the
+      fingerprint image affects how accurately these details can be detected.
+    </p>
+  </div>
+
+  <p class="disclaimer">
+    These four illustrations show examples of fingerprint ridge details.
+    They are not a complete list of all possible minutiae.
+  </p>
+
+</div>
+
+
+<style>
+
+/* Main container */
+
+#fingerprint-minutiae {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+#fingerprint-minutiae * {
+  box-sizing: border-box;
+}
+
+
+/* Main heading */
+
+#fingerprint-minutiae h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: bold;
+  color: #073763;
+  margin: 0 0 10px;
+}
+
+#fingerprint-minutiae .intro {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #000000;
+  margin: 0 0 28px;
+  max-width: 850px;
+}
+
+
+/* Four-card layout */
+
+#fingerprint-minutiae .minutiae-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.5vw, 28px);
+  width: 100%;
+}
+
+#fingerprint-minutiae .minutiae-card {
+  min-width: 0;
+  padding: clamp(12px, 2vw, 22px);
+  background: #FFFFFF;
+  border: 1px solid #e1e5e9;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Fingerprint illustrations */
+
+#fingerprint-minutiae .minutiae-illustration {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+#fingerprint-minutiae .minutiae-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+
+/* Fingerprint lines */
+
+#fingerprint-minutiae .guide {
+  fill: none;
+  stroke: #c7c7c7;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+#fingerprint-minutiae .ridge {
+  fill: none;
+  stroke: #111111;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* Feature definitions */
+
+#fingerprint-minutiae .feature-information {
+  width: 100%;
+  margin: 8px auto 0;
+}
+
+#fingerprint-minutiae .feature-information h3 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: clamp(20px, 2.2vw, 25px);
+  color: #073763;
+  margin: 0 0 8px;
+}
+
+#fingerprint-minutiae .feature-information p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #000000;
+  margin: 0 0 8px;
+}
+
+#fingerprint-minutiae .feature-information .feature-extra {
+  color: #444444;
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+
+/* Replay animation button */
+
+#fingerprint-minutiae .animation-controls {
+  display: flex;
+  justify-content: center;
+  margin: 26px 0;
+}
+
+#fingerprint-minutiae #replay-minutiae {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #073763;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#fingerprint-minutiae #replay-minutiae:hover {
+  background: #0b548e;
+}
+
+#fingerprint-minutiae #replay-minutiae:focus-visible {
+  outline: 3px solid #f0a52b;
+  outline-offset: 4px;
+}
+
+#fingerprint-minutiae #replay-minutiae span {
+  font-size: 19px;
+}
+
+
+/* Replay drawing animation */
+
+@keyframes minutiae-replay {
+  from {
+    stroke-dashoffset: var(--ridge-length);
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+#fingerprint-minutiae.is-animating .ridge {
+  animation: minutiae-replay 1.25s ease forwards;
+}
+
+
+/* Additional explanation */
+
+#fingerprint-minutiae .minutiae-note {
+  margin-top: 10px;
+  padding: 18px 20px;
+  border-left: 3px solid #249bd4;
+  background: #f8fafc;
+}
+
+#fingerprint-minutiae .minutiae-note strong {
+  font-size: 15px;
+  color: #073763;
+}
+
+#fingerprint-minutiae .minutiae-note p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 7px 0 0;
+  color: #000000;
+}
+
+#fingerprint-minutiae .disclaimer {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #555555;
+  margin: 16px 0 0;
+}
+
+
+/* Tablet and mobile */
+
+@media (max-width: 700px) {
+
+  #fingerprint-minutiae {
+    padding: 22px 12px;
+  }
+
+  #fingerprint-minutiae .intro {
+    font-size: 14px;
+  }
+
+  #fingerprint-minutiae .minutiae-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  #fingerprint-minutiae .minutiae-card {
+    padding: 14px;
+  }
+
+  #fingerprint-minutiae .minutiae-illustration {
+    max-width: 480px;
+  }
+
+  #fingerprint-minutiae .feature-information h3 {
+    font-size: 21px;
+  }
+
+  #fingerprint-minutiae .feature-information p {
+    font-size: 13px;
+  }
+
+  #fingerprint-minutiae .feature-information .feature-extra {
+    font-size: 12px;
+  }
+
+  #fingerprint-minutiae .minutiae-note {
+    padding: 14px;
+  }
+
+}
+
+
+/* Reduced-motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #fingerprint-minutiae.is-animating .ridge {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  #fingerprint-minutiae * {
+    transition: none !important;
+  }
+
+}
+
+</style>
+
+
+<script>
+(() => {
+
+  const root = document.getElementById("fingerprint-minutiae");
+
+  if (!root || root.dataset.ready === "true") return;
+
+  root.dataset.ready = "true";
+
+  const replayButton = root.querySelector("#replay-minutiae");
+  const ridges = root.querySelectorAll(".ridge");
+
+  let replayTimer;
+
+  function replayAnimation() {
+
+    /* Respect reduced-motion preferences */
+
+    if (window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    /* Stop any animation that is already running */
+
+    window.clearTimeout(replayTimer);
+    root.classList.remove("is-animating");
+
+    /* Prepare each ridge for drawing */
+
+    ridges.forEach(ridge => {
+
+      const length = ridge.getTotalLength();
+
+      ridge.style.setProperty("--ridge-length", length);
+      ridge.style.strokeDasharray = length;
+      ridge.style.strokeDashoffset = length;
+
+    });
+
+    /* Restart the animation */
+
+    void root.offsetWidth;
+
+    root.classList.add("is-animating");
+
+    /* Return the lines to their normal static state */
+
+    replayTimer = window.setTimeout(() => {
+
+      root.classList.remove("is-animating");
+
+      ridges.forEach(ridge => {
+        ridge.style.strokeDasharray = "none";
+        ridge.style.strokeDashoffset = "0";
+      });
+
+    }, 1450);
+
+  }
+
+  replayButton.addEventListener("click", replayAnimation);
+
+})();
+</script>
